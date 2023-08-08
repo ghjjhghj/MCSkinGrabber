@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Colbster937's Skin Downloader</title>
+  <link rel="icon" href="https://minotar.net/bust/MHF_Steve">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: lightblue;
+      color: black;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .dark-mode-toggle {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: 0 10px 10px 0;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .dark-mode-toggle.light-mode {
+      border-radius: 0 10px 10px 0;
+      background-color: black;
+    }
+
+    .dark-mode-toggle .symbol {
+      font-size: 24px;
+      border-radius: 0 10px 10px 0;
+    }
+
+    .textbox {
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      width: calc(100% / 1.5);
+      height: 40px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .button {
+      border-radius: 10px;
+      padding: 12px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      width: calc(100% / 1.5);
+      margin-bottom: 10px;
+    }
+
+    .download-button {
+      border-radius: 10px;
+      padding: 12px;
+      background-color: #ccc;
+      color: #fff;
+      border: none;
+      cursor: not-allowed;
+      font-size: 16px;
+      width: calc(100% / 1.5);
+    }
+
+    .download-button.enabled {
+      background-color: #007bff;
+      cursor: pointer;
+    }
+
+    .image-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .image {
+      margin-top: 20px;
+      width: 120px;
+    }
+
+    .title {
+      font-size: 32px;
+      font-family: "Inter", sans-serif;
+      color: white;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="dark-mode-toggle" onclick="toggleDarkMode()">
+  <span class="symbol">☼</span>
+</div>
+
+<div class="container">
+  <div class="title">Colbster937's Skin Downloader</div>
+  <input type="text" id="inputText" class="textbox" placeholder="Username/UUID" oninput="showImages()" maxlength="16" pattern="[a-zA-Z0-9]*">
+  <button onclick="downloadSkin()" class="download-button" id="downloadButton" disabled>Download Skin</button>
+  <div class="image-container">
+    <img id="resultImage" src="https://mc-heads.net/body/MHF_Steve" class="image">
+  </div>
+</div>
+
+<script>
+  let isDarkMode = false;
+
+  function toggleDarkMode() {
+    isDarkMode = !isDarkMode;
+    applyDarkModeStyles();
+  }
+
+  function applyDarkModeStyles() {
+    const body = document.body;
+    const darkModeToggle = document.querySelector('.dark-mode-toggle');
+    const symbol = darkModeToggle.querySelector('.symbol');
+    const title = document.querySelector('.title');
+    const textbox = document.querySelector('.textbox');
+    const buttons = document.querySelectorAll('.button, .download-button');
+
+    if (isDarkMode) {
+      body.style.backgroundColor = 'indigo';
+      body.style.color = 'white';
+      darkModeToggle.style.backgroundColor = 'black';
+      symbol.textContent = '☾';
+      title.style.color = 'white';
+      textbox.style.borderColor = 'black';
+      textbox.style.backgroundColor = '#333';
+      textbox.style.color = 'white';
+      buttons.forEach(button => {
+        button.style.backgroundColor = '#333';
+        button.style.color = 'white';
+      });
+    } else {
+      body.style.backgroundColor = 'lightblue';
+      body.style.color = 'black';
+      darkModeToggle.style.backgroundColor = 'white';
+      symbol.textContent = '☼';
+      title.style.color = 'white';
+      textbox.style.borderColor = '#ccc';
+      textbox.style.backgroundColor = 'white';
+      textbox.style.color = 'black';
+      buttons.forEach(button => {
+        button.style.backgroundColor = '#007bff';
+        button.style.color = 'white';
+      });
+    }
+
+    darkModeToggle.classList.toggle('light-mode', !isDarkMode);
+  }
+
+  function showImages() {
+    var inputText = document.getElementById("inputText").value;
+    var resultImage = document.getElementById("resultImage");
+    var allowedTexts = ["8", "f", "g"];
+    var downloadButton = document.getElementById("downloadButton");
+
+    if (inputText === "Colbster937") {
+      resultImage.src = "https://mc-heads.net/body/Colbster937";
+      downloadButton.classList.remove("enabled");
+      downloadButton.disabled = true;
+    } else if (inputText.length < 3 || allowedTexts.includes(inputText)) {
+      resultImage.src = "https://mc-heads.net/body/MHF_Steve";
+      downloadButton.classList.remove("enabled");
+      downloadButton.disabled = true;
+    } else {
+      var encodedText = encodeURIComponent(inputText);
+      resultImage.src = "https://mc-heads.net/body/" + encodedText;
+      downloadButton.classList.add("enabled");
+      downloadButton.disabled = false;
+    }
+  }
+
+  function downloadSkin() {
+    var inputText = document.getElementById("inputText").value;
+    var downloadLink = document.createElement("a");
+    var allowedTexts = ["8", "f", "g"];
+    var downloadButton = document.getElementById("downloadButton");
+    
+    if (inputText === "Colbster937") {
+      downloadLink.href = "";
+      downloadLink.download = "";
+      downloadButton.title = "ⓘ You can't download my skin!";
+      return;
+    } else if (inputText.length < 3 || allowedTexts.includes(inputText)) {
+      downloadLink.href = "https://mc-heads.net/download/default_skin.png";
+      downloadLink.download = "default_skin.png";
+      downloadButton.title = "";
+    } else {
+      var encodedText = encodeURIComponent(inputText);
+      downloadLink.href = "https://www.mc-heads.net/download/" + encodedText + ".png";
+      downloadLink.download = "skin.png";
+      downloadButton.title = "";
+    }
+    
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  }
+</script>
+
+</body>
+</html>
