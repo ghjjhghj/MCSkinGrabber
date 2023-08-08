@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="htmlContainer"></div>
+    <script>
+        $(document).ready(function() {
+            var githubRawURL = 'https://raw.githubusercontent.com/colbychittenden/MCSkinGrabber/main/SkinDownloader.html';
+
+            $.get(githubRawURL, function(data) {
+                $('#htmlContainer').html(data);
+                document.title = "Colbster937's Skin Downloader";
+            });
+        });
+    </script>
+</body>
+</html>
